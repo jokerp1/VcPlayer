@@ -6,6 +6,7 @@ import re
 import asyncio
 
 from config import ASSISTANT_NAME, BOT_USERNAME, IMG_1, IMG_2
+from driver.decorators import sudo_users_only
 from driver.filters import command, other_filters
 from driver.queues import QUEUE, add_to_queue
 from driver.shasa import call_py, user
@@ -57,6 +58,7 @@ async def ytdl(link):
 
 
 @Client.on_message(command(["vplay", f"vplay@{BOT_USERNAME}"]) & other_filters)
+@sudo_users_only
 async def vplay(c: Client, m: Message):
     replied = m.reply_to_message
     chat_id = m.chat.id
@@ -293,6 +295,7 @@ async def vplay(c: Client, m: Message):
 
 
 @Client.on_message(command(["vstream", f"vstream@{BOT_USERNAME}"]) & other_filters)
+@sudo_users_only
 async def vstream(c: Client, m: Message):
     m.reply_to_message
     chat_id = m.chat.id
