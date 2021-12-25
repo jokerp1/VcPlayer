@@ -1,7 +1,7 @@
 from cache.admins import admins
 from driver.shasa import call_py
 from pyrogram import Client, filters
-from driver.decorators import authorized_users_only
+from driver.decorators import sudo_users_only
 from driver.filters import command, other_filters
 from driver.queues import QUEUE, clear_queue
 from driver.utils import skip_current_song, skip_item
@@ -25,7 +25,7 @@ bcl = InlineKeyboardMarkup(
 
 
 @Client.on_message(command(["reload", f"reload@{BOT_USERNAME}"]) & other_filters)
-@authorized_users_only
+@sudo_users_only
 async def update_admin(client, message):
     global admins
     new_admins = []
@@ -39,7 +39,7 @@ async def update_admin(client, message):
 
 
 @Client.on_message(command(["skip", f"skip@{BOT_USERNAME}", "vskip"]) & other_filters)
-@authorized_users_only
+@sudo_users_only
 async def skip(client, m: Message):
 
     keyboard = InlineKeyboardMarkup(
@@ -92,7 +92,7 @@ async def skip(client, m: Message):
     command(["stop", f"stop@{BOT_USERNAME}", "end", f"end@{BOT_USERNAME}", "vstop"])
     & other_filters
 )
-@authorized_users_only
+@sudo_users_only
 async def stop(client, m: Message):
     chat_id = m.chat.id
     if chat_id in QUEUE:
@@ -109,7 +109,7 @@ async def stop(client, m: Message):
 @Client.on_message(
     command(["pause", f"pause@{BOT_USERNAME}", "vpause"]) & other_filters
 )
-@authorized_users_only
+@sudo_users_only
 async def pause(client, m: Message):
     chat_id = m.chat.id
     if chat_id in QUEUE:
@@ -127,7 +127,7 @@ async def pause(client, m: Message):
 @Client.on_message(
     command(["resume", f"resume@{BOT_USERNAME}", "vresume"]) & other_filters
 )
-@authorized_users_only
+@sudo_users_only
 async def resume(client, m: Message):
     chat_id = m.chat.id
     if chat_id in QUEUE:
@@ -145,7 +145,7 @@ async def resume(client, m: Message):
 @Client.on_message(
     command(["mute", f"mute@{BOT_USERNAME}", "vmute"]) & other_filters
 )
-@authorized_users_only
+@sudo_users_only
 async def mute(client, m: Message):
     chat_id = m.chat.id
     if chat_id in QUEUE:
@@ -163,7 +163,7 @@ async def mute(client, m: Message):
 @Client.on_message(
     command(["unmute", f"unmute@{BOT_USERNAME}", "vunmute"]) & other_filters
 )
-@authorized_users_only
+@sudo_users_only
 async def unmute(client, m: Message):
     chat_id = m.chat.id
     if chat_id in QUEUE:
